@@ -14,6 +14,6 @@ typedef struct {
 
 RaidConfig get_default_config(void);
 void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result); 
-
+void print_usage(const char *program_name);
 
 #endif 

@@ -65,3 +65,38 @@ void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result) {
     }
     *result = true;
 }
+
+void print_usage(const char *program_name) {
+    fprintf(stderr, "RAID_SIM(1)                 User Commands                 RAID_SIM(1)\n\n");
+    
+    fprintf(stderr, "NAME\n");
+    fprintf(stderr, "       %s - Markov chain simulation for RAID reliability analysis\n\n", program_name);
+    
+    fprintf(stderr, "SYNOPSIS\n");
+    fprintf(stderr, "       %s [OPTIONS]\n\n", program_name);
+    
+    fprintf(stderr, "DESCRIPTION\n");
+    fprintf(stderr, "       %s models data loss probabilities for a disk storage array\n", program_name);
+    fprintf(stderr, "       over a given time horizon using Euler numerical integration.\n\n");
+    
+    fprintf(stderr, "OPTIONS\n");
+    fprintf(stderr, "       -d, --disks NUM\n");
+    fprintf(stderr, "              Number of disks in the array (Integer >= 2). Default: 3.\n\n");
+    
+    fprintf(stderr, "       -y, --years NUM\n");
+    fprintf(stderr, "              Simulation timeline length in years (Float > 0). Default: 30.0.\n\n");
+    
+    fprintf(stderr, "       --mtbf NUM\n");
+    fprintf(stderr, "              Mean Time Between Failures in hours (Float > 0).\n");
+    fprintf(stderr, "              Default: 1200000.0.\n\n");
+    
+    fprintf(stderr, "       --mttr NUM\n");
+    fprintf(stderr, "              Mean Time To Repair in hours (Float > 0). Default: 24.0.\n\n");
+    
+    fprintf(stderr, "       --dt NUM\n");
+    fprintf(stderr, "              Mathematical delta step size (Float > 0). Default: 0.1.\n\n");
+    
+    fprintf(stderr, "EXAMPLES\n");
+    fprintf(stderr, "       Simulate a 5-disk array over 10 years with an explicit 12.5 hour MTTR:\n\n");
+    fprintf(stderr, "              %s -d 5 -y 10 --mttr 12.5\n\n", program_name);
+}
