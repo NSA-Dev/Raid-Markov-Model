@@ -5,7 +5,7 @@
 #include <string.h>
 #include <errno.h>
 
-void get_default_config(raidConfig_t *config) {
+void get_default_config(RaidConfig *config) {
     if(!config) return; 
     
     config->mtbf = 1200000.0; // 1.2M Hours
@@ -17,7 +17,7 @@ void get_default_config(raidConfig_t *config) {
 }
 
 
-void parse_arguments(int argc, char *argv[], raidConfig_t *config, bool *result) {
+void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result) {
     char *endptr;
     long disk_num;
     double time;
