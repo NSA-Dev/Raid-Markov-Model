@@ -1,4 +1,5 @@
 #include "sim.h"
+#include <stdio.h>
 
 void run_raid_simulation(const RaidConfig *config, SimResult* res) {
     double lambda, mu, dt, current_time;
