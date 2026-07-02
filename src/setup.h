@@ -12,7 +12,7 @@ typedef struct {
     double dt;
 } RaidConfig;
 
-RaidConfig get_default_config(void);
+void get_default_config(RaidConfig *config);
 void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result); 
 void print_usage(const char *program_name);
 
