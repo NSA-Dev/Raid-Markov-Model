@@ -7,7 +7,7 @@
 
 void get_default_config(RaidConfig *config) {
     if(!config) return; 
-    
+    config->type = RAID1_SPARE; 
     config->mtbf = 1200000.0; // 1.2M Hours
     config->mttr = 24.0;      // 1 Day
     config->num_disks = 3;    // Minimum RAID-5 array

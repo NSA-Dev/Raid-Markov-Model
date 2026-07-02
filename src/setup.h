@@ -4,13 +4,22 @@
 #include <stdbool.h>
 #define HOURS_PER_YEAR 8766.0
 
+typedef enum {
+    RAID1_SPARE,
+    RAID10,
+    RAID6
+} RaidType;
+
 typedef struct {
+    RaidType type;
     double mtbf;
     double mttr;
     int num_disks;
     double max_time;
     double dt;
 } RaidConfig;
+
+
 
 void get_default_config(RaidConfig *config);
 void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result); 
