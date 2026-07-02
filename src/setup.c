@@ -21,49 +21,59 @@ void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result) {
     char *endptr;
     long disk_num;
     double time;
-    int i;  
-    
-    *result = false; 
+    int i;
 
+    *result = false; 
+    
     for (i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--help") == 0 || strcmp(strcmp(argv[i], "-h") == 0)) {
+            print_usage(argv[0]);
+            return;  
+        }
         
         if (strcmp(argv[i], "--disks") == 0 || strcmp(argv[i], "-d") == 0) {
-            if (i + 1 >= argc) { *result = false; return; }
+            if (i + 1 >= argc) {
+                fprintf(stderr, "Error: Option %s requires an argument.\n", argv[i]);
+                return;
+            }
             disk_num = strtol(argv[++i], &endptr, 10);
-            if (*endptr != '\0' || disk_num < 2) { *result = false; return; }
+            if (*endptr != '\0' || disk_num < 2) return;
             config->num_disks = (int)disk_num;
         } 
         else if (strcmp(argv[i], "--years") == 0 || strcmp(argv[i], "-y") == 0) {
-            if (i + 1 >= argc) { *result = false; return; }
+            if (i + 1 >= argc) {
+                fprintf(stderr, "Error: Option %s requires an argument.\n", argv[i]);
+                return;
+            }
             time = strtod(argv[++i], &endptr);
-            if (*endptr != '\0' || time <= 0.0) { *result = false; return; }
+            if (*endptr != '\0' || time <= 0.0) return;
             config->max_time = time * HOURS_PER_YEAR;
         } 
         else if (strcmp(argv[i], "--mtbf") == 0) {
-            if (i + 1 >= argc) { *result = false; return; }
+            if (i + 1 >= argc) return;
             time = strtod(argv[++i], &endptr);
-            if (*endptr != '\0' || time <= 0.0) { *result = false; return; }
+            if (*endptr != '\0' || time <= 0.0) return;
             config->mtbf = time;
         } 
         else if (strcmp(argv[i], "--mttr") == 0) {
-            if (i + 1 >= argc) { *result = false; return; }
+            if (i + 1 >= argc) return;
             time = strtod(argv[++i], &endptr);
-            if (*endptr != '\0' || time <= 0.0) { *result = false; return; }
+            if (*endptr != '\0' || time <= 0.0) return;
             config->mttr = time;
         } 
         else if (strcmp(argv[i], "--dt") == 0) {
-            if (i + 1 >= argc) { *result = false; return; }
+            if (i + 1 >= argc) return;
             time = strtod(argv[++i], &endptr);
-            if (*endptr != '\0' || time <= 0.0) { *result = false; return; }
+            if (*endptr != '\0' || time <= 0.0) return;
             config->dt = time;
         } 
         else {
-            fprintf(stderr, "Unknown option: %s\n", argv[i]);
-            *result = false;
+            fprintf(stderr, "raid_sim: unrecognized option '%s'\n", argv[i]);
+            fprintf(stderr, "Try '%s --help' or '%s -h' for more information.\n", argv[0], argv[0]);
             return; 
         }
     }
-    *result = true;
+    *result = true; 
 }
 
 void print_usage(const char *program_name) {
