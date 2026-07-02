@@ -10,10 +10,10 @@ typedef struct {
     int num_disks;
     double max_time;
     double dt;
-} RaidConfig;
+} raidConfig_t;
 
-void get_default_config(RaidConfig *config);
-void parse_arguments(int argc, char *argv[], RaidConfig *config, bool *result); 
+void get_default_config(raidConfig_t *config);
+void parse_arguments(int argc, char *argv[], raidConfig_t *config, bool *result); 
 void print_usage(const char *program_name);
 
 #endif 
