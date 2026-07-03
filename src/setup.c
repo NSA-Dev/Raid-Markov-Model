@@ -10,7 +10,7 @@ void get_default_config(RaidConfig *config) {
     config->type = RAID1_SPARE; 
     config->mtbf = 1200000.0; // 1.2M Hours
     config->mttr = 24.0;      // 1 Day
-    config->num_disks = 3;    // Minimum RAID-5 array
+    config->num_disks = 3;    // Default overwritten by case-study tier configuration
     config->max_time = 30.0 * HOURS_PER_YEAR; // 30 Years default
     config->dt = 0.1;           // 6-minute simulation steps
    
@@ -86,12 +86,16 @@ void print_usage(const char *program_name) {
     fprintf(stderr, "       %s [OPTIONS]\n\n", program_name);
     
     fprintf(stderr, "DESCRIPTION\n");
-    fprintf(stderr, "       %s models data loss probabilities for a disk storage array\n", program_name);
-    fprintf(stderr, "       over a given time horizon using Euler numerical integration.\n\n");
+    fprintf(stderr, "       %s runs the three fixed report case-study tiers by default:\n", program_name);
+    fprintf(stderr, "       3-disk RAID 1 + hot spare, 8-disk RAID 10, and 16-disk RAID 6.\n");
+    fprintf(stderr, "       The model estimates structural RAID-layer data loss from independent\n");
+    fprintf(stderr, "       disk failures using Euler numerical integration.\n\n");
     
     fprintf(stderr, "OPTIONS\n");
     fprintf(stderr, "       -d, --disks NUM\n");
-    fprintf(stderr, "              Number of disks in the array (Integer >= 2). Default: 3.\n\n");
+    fprintf(stderr, "              Accepted for compatibility, but not meaningful in the default\n");
+    fprintf(stderr, "              three-tier case-study mode because each tier sets its disk\n");
+    fprintf(stderr, "              count internally.\n\n");
     
     fprintf(stderr, "       -y, --years NUM\n");
     fprintf(stderr, "              Simulation timeline length in years (Float > 0). Default: 30.0.\n\n");
@@ -104,9 +108,11 @@ void print_usage(const char *program_name) {
     fprintf(stderr, "              Mean Time To Repair in hours (Float > 0). Default: 24.0.\n\n");
     
     fprintf(stderr, "       --dt NUM\n");
-    fprintf(stderr, "              Mathematical delta step size (Float > 0). Default: 0.1.\n\n");
+    fprintf(stderr, "              Euler integration step size in hours (Float > 0). Default: 0.1.\n\n");
     
     fprintf(stderr, "EXAMPLES\n");
-    fprintf(stderr, "       Simulate a 5-disk array over 10 years with an explicit 12.5 hour MTTR:\n\n");
-    fprintf(stderr, "              %s -d 5 -y 10 --mttr 12.5\n\n", program_name);
+    fprintf(stderr, "       Run the report case study with manufacturer MTBF:\n\n");
+    fprintf(stderr, "              %s\n\n", program_name);
+    fprintf(stderr, "       Run the report case study with guarantee-implied MTBF:\n\n");
+    fprintf(stderr, "              %s --mtbf 249700\n\n", program_name);
 }
